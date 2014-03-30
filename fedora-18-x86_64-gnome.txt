@@ -1,0 +1,45 @@
+install
+text
+
+cdrom
+
+lang en_US.UTF-8
+keyboard us
+
+network --onboot yes --device eth0 --bootproto dhcp --noipv6
+
+timezone --utc America/Chicago
+
+zerombr
+clearpart --all --initlabel
+bootloader --location=mbr --timeout=5 --append="rhgb quiet"
+
+part /boot --fstype=ext3 --size=256
+part pv.01 --size=1024 --grow
+volgroup vg_root pv.01
+logvol swap --fstype swap --name=lv_swap --vgname=vg_root --size=1024
+logvol / --fstype=ext4 --name=lv_root --vgname=vg_root --size=1024 --grow
+
+authconfig --enableshadow --passalgo=sha512
+
+rootpw --iscrypted CHANGE_ME
+
+firewall --service=ssh
+selinux --enforcing
+
+xconfig --startxonboot
+
+reboot
+
+%packages
+@core
+@base-x
+@gnome-desktop
+firefox
+openssh-clients
+wget
+bind-utils
+man
+mailx
+telnet
+%end
