@@ -1,0 +1,43 @@
+install
+text
+
+cdrom
+#url --url CHANGE_ME
+
+lang en_US.UTF-8
+keyboard us
+
+network --device eth0 --bootproto dhcp
+
+timezone --utc America/Chicago
+
+zerombr
+clearpart --all --initlabel
+bootloader --location=mbr
+
+# Ubuntu will not adhere to this because partitioning via kickstart is not
+# fully implemented
+part /boot --fstype=ext3 --size=256 --asprimary
+part pv.01 --size=1024 --grow --asprimary
+volgroup vg_root pv.01
+logvol swap --fstype swap --name=lv_swap --vgname=vg_root --size=1024
+logvol / --fstype=ext4 --name=lv_root --vgname=vg_root --size=1024 --grow
+
+auth --enableshadow --enablemd5
+
+rootpw --iscrypted CHANGE_ME
+user --disabled
+
+firewall --disabled
+
+skipx
+
+reboot
+
+%packages
+ubuntu-minimal
+openssh-server
+curl
+wget
+git
+vim

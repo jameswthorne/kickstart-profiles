@@ -1,0 +1,46 @@
+install
+text
+
+cdrom
+#url --url CHANGE_ME
+
+lang en_US.UTF-8
+keyboard us
+
+network --onboot yes --device eth0 --bootproto dhcp --noipv6
+
+timezone --utc America/Chicago
+
+zerombr
+clearpart --all --initlabel
+bootloader --location=mbr --driveorder=sda --append="crashkernel=auto rhgb quiet"
+
+part /boot --fstype=ext3 --size=256
+part pv.01 --size=1024 --grow
+volgroup vg_root pv.01
+logvol swap --fstype swap --name=lv_swap --vgname=vg_root --size=1024
+logvol / --fstype=ext4 --name=lv_root --vgname=vg_root --size=1024 --grow
+
+authconfig --enableshadow --passalgo=sha512
+
+rootpw --iscrypted CHANGE_ME
+
+firewall --enabled --ssh
+selinux --enforcing
+
+skipx
+
+reboot
+
+%packages
+@core
+openssh-server
+wget
+curl
+git
+vim
+ntp
+%end
+
+%post
+%end
