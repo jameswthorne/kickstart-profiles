@@ -36,9 +36,12 @@ shutdown
 %packages
 @core
 openssh-server
+openssh-clients
 wget
 curl
 git
+man
+vim
 ntp
 %end
 
@@ -52,6 +55,7 @@ service ntpd start
 
 chkconfig sshd on
 chkconfig iptables off
+chkconfig iptables6 off
 
 useradd vagrant
 
@@ -64,7 +68,7 @@ chown -R vagrant:vagrant /home/vagrant/.ssh
 
 sed -i 's/^.*requiretty/#Defaults requiretty/' /etc/sudoers
 
-echo "vagrant ALL=NOPASSWD: ALL" >> /etc/sudoers
+echo "vagrant ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
 cat << EOF1 > /etc/sysconfig/network-scripts/ifcfg-eth0
 DEVICE=eth0
@@ -76,8 +80,10 @@ EOF1
 
 rm -f /etc/udev/rules.d/70-persistent-net.rules
 
-yum install -y vim man openssh-clients git wget
-
 yum clean all
 
 history -c
+
+rm -rf /tmp/*
+
+rm -f /var/log/wtmp /var/log/btmp

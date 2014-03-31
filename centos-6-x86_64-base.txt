@@ -35,9 +35,11 @@ reboot
 %packages
 @core
 openssh-server
+openssh-clients
 wget
 curl
 git
+man
 vim
 ntp
 %end
