@@ -55,7 +55,7 @@ service ntpd start
 
 chkconfig sshd on
 chkconfig iptables off
-chkconfig iptables6 off
+chkconfig ip6tables off
 
 useradd vagrant
 
