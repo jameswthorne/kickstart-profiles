@@ -15,8 +15,6 @@ zerombr
 clearpart --all --initlabel
 bootloader --location=mbr
 
-# Ubuntu will not adhere to this because partitioning via kickstart is not
-# fully implemented
 part /boot --fstype=ext3 --size=256 --asprimary
 part pv.01 --size=1024 --grow --asprimary
 volgroup vg_root pv.01
@@ -37,7 +35,10 @@ reboot
 %packages
 ubuntu-minimal
 openssh-server
-curl
+openssh-client
 wget
+curl
 git
+man
 vim
+ntp
