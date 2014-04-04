@@ -38,10 +38,13 @@ reboot
 %packages
 ubuntu-minimal
 openssh-server
-curl
+openssh-client
 wget
+curl
 git
+man
 vim
+ntp
 
 %post
 
@@ -54,8 +57,12 @@ curl https://raw.github.com/mitchellh/vagrant/master/keys/vagrant.pub >> /home/v
 chmod 600 /home/vagrant/.ssh/authorized_keys
 chown -R vagrant:vagrant /home/vagrant/.ssh
 
-echo "vagrant ALL=NOPASSWD: ALL" >> /etc/sudoers
+echo "vagrant ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
 apt-get clean
 
 history -c
+
+rm -rf /tmp/*
+
+rm -f /var/log/wtmp /var/log/btmp
