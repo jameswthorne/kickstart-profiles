@@ -53,6 +53,8 @@ service ntpd stop
 ntpdate time.nist.gov
 service ntpd start
 
+sed -i 's/#UseDNS yes/UseDNS no/g' /etc/ssh/sshd_config
+
 chkconfig sshd on
 chkconfig iptables off
 chkconfig ip6tables off
