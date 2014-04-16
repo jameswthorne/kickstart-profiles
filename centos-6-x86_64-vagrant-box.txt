@@ -82,8 +82,8 @@ rm -f /etc/udev/rules.d/70-persistent-net.rules
 
 yum clean all
 
-history -c
-
 rm -rf /tmp/*
 
 rm -f /var/log/wtmp /var/log/btmp
+
+history -c && history -w
