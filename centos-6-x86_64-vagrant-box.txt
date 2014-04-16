@@ -60,6 +60,7 @@ chkconfig iptables off
 chkconfig ip6tables off
 
 useradd vagrant
+echo "vagrant" | passwd vagrant --stdin
 
 mkdir -m 0700 -p /home/vagrant/.ssh
 
