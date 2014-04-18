@@ -59,8 +59,8 @@ echo "vagrant ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
 apt-get clean
 
-history -c
-
 rm -rf /tmp/*
 
 rm -f /var/log/wtmp /var/log/btmp
+
+history -c
