@@ -2,18 +2,17 @@ install
 text
 
 cdrom
-#url --url CHANGE_ME
 
 lang en_US.UTF-8
 keyboard us
 
-network --onboot yes --device eth0 --bootproto dhcp --noipv6
+network --onboot yes --bootproto dhcp --noipv6
 
 timezone --utc America/Chicago
 
 zerombr
 clearpart --all --initlabel
-bootloader --location=mbr --driveorder=sda --append="crashkernel=auto rhgb quiet"
+bootloader --location=mbr --append="crashkernel=auto rhgb quiet"
 
 part /boot --fstype=ext3 --size=256
 part pv.01 --size=1024 --grow
@@ -46,8 +45,6 @@ ntp
 %end
 
 %post
-
-# Turn ntpd and sync
 chkconfig ntpd on
 service ntpd stop
 ntpdate time.nist.gov
@@ -87,3 +84,4 @@ rm -rf /tmp/*
 rm -f /var/log/wtmp /var/log/btmp
 
 history -c
+%end

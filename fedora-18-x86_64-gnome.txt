@@ -6,13 +6,13 @@ cdrom
 lang en_US.UTF-8
 keyboard us
 
-network --onboot yes --device eth0 --bootproto dhcp --noipv6
+network --onboot yes --bootproto dhcp --noipv6
 
 timezone --utc America/Chicago
 
 zerombr
 clearpart --all --initlabel
-bootloader --location=mbr --timeout=5 --append="rhgb quiet"
+bootloader --location=mbr --append="crashkernel=auto rhgb quiet"
 
 part /boot --fstype=ext3 --size=256
 part pv.01 --size=1024 --grow

@@ -12,7 +12,7 @@ timezone --utc America/Chicago
 
 zerombr
 clearpart --all --initlabel
-bootloader --location=mbr --driveorder=sda --append="crashkernel=auto rhgb quiet"
+bootloader --location=mbr --append="crashkernel=auto rhgb quiet"
 
 part /boot --fstype=ext3 --size=256
 part pv.01 --size=1024 --grow
@@ -45,7 +45,6 @@ ntp
 %end
 
 %post
-# Turn ntpd and sync
 systemctl enable ntpd
 systemctl stop ntpd
 ntpdate time.nist.gov
