@@ -46,7 +46,6 @@ ntp
 %end
 
 %post
-
 # Turn ntpd and sync
 chkconfig ntpd on
 service ntpd stop
