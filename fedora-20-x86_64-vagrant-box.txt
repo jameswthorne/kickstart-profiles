@@ -68,6 +68,9 @@ echo "vagrant ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
 rm -f /etc/udev/rules.d/70-persistent-net.rules
 
+sed -i '/UUID/d' /etc/sysconfig/network-scripts/ifcfg-p2p1
+sed -i '/HWADDR/d' /etc/sysconfig/network-scripts/ifcfg-p2p1
+
 yum clean all
 
 rm -rf /tmp/*
