@@ -68,8 +68,14 @@ echo "vagrant ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
 rm -f /etc/udev/rules.d/70-persistent-net.rules
 
-sed -i '/UUID/d' /etc/sysconfig/network-scripts/ifcfg-p2p1
-sed -i '/HWADDR/d' /etc/sysconfig/network-scripts/ifcfg-p2p1
+# Fedora 15 and newer names network devices based on physical locations
+# in the server. Depending on the network device driver, the name could
+# be different on each server. The following three lines will find the
+# primary network interface and remove the hardcoded UUID and HWADDR
+# values from the primary network interface configuration file.
+PRIMARY_INTERFACE=$(ip route list match 0.0.0.0 | awk 'NR==1 {print $5}')
+sed -i '/UUID/d' /etc/sysconfig/network-scripts/ifcfg-$PRIMARY_INTERFACE
+sed -i '/HWADDR/d' /etc/sysconfig/network-scripts/ifcfg-$PRIMARY_INTERFACE
 
 yum clean all
 
