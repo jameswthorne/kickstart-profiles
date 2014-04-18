@@ -1,8 +1,7 @@
 install
 text
 
-cdrom
-#url --url CHANGE_ME
+url --url http://mirrors.kernel.org/fedora/releases/20/Everything/x86_64/os/
 
 lang en_US.UTF-8
 keyboard us
@@ -47,13 +46,13 @@ ntp
 
 %post
 # Turn ntpd and sync
-chkconfig ntpd on
-service ntpd stop
+systemctl enable ntpd
+systemctl stop ntpd
 ntpdate time.nist.gov
-service ntpd start
+systemctl start ntpd
 
-chkconfig sshd on
-chkconfig firewalld off
+systemctl enable sshd
+systemctl disable firewalld
 
 useradd vagrant
 
@@ -67,14 +66,6 @@ chown -R vagrant:vagrant /home/vagrant/.ssh
 sed -i 's/^\(Defaults.*requiretty\)/#\1/' /etc/sudoers
 
 echo "vagrant ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
-
-cat << EOF1 > /etc/sysconfig/network-scripts/ifcfg-eth0
-DEVICE=eth0
-TYPE=Ethernet
-ONBOOT=yes
-NM_CONTROLLED=no
-BOOTPROTO=dhcp
-EOF1
 
 rm -f /etc/udev/rules.d/70-persistent-net.rules
 
