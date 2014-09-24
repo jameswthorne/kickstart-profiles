@@ -1,0 +1,43 @@
+install
+text
+
+url --url http://mirror.rackspace.com/CentOS/6.5/os/x86_64/
+
+lang en_US.UTF-8
+keyboard us
+
+network --onboot yes --bootproto dhcp --noipv6
+
+timezone --utc America/Chicago
+
+zerombr
+clearpart --all --initlabel
+bootloader --location=mbr --append="crashkernel=auto rhgb quiet"
+
+part / --fstype=ext4 --size=1024 --grow
+
+authconfig --enableshadow --passalgo=sha512
+
+rootpw centos
+
+firewall --disable
+selinux --disabled
+
+skipx
+
+shutdown
+
+%packages
+@core
+openssh-server
+openssh-clients
+wget
+curl
+git
+man
+vim
+ntp
+%end
+
+%post
+%end
